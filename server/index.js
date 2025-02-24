@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import http from "http";
 import { configDotenv } from "dotenv";
 import cors from "cors";
+import path from "path";
 
 configDotenv();
 const PORT = process.env.PORT || 3001;
@@ -19,6 +20,17 @@ const io = new Server(server, {
 app.use(cors());
 
 
+// ---------- Deployment ------------
+
+const __dirname1 = path.resolve();
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname1, "/client/dist")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname1, "client", "dist", "index.html"));
+     });
+
+}
+
 io.on("connection",(socket) => {
     console.log("a user connected");
    
@@ -33,7 +45,3 @@ io.on("connection",(socket) => {
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-
-
-
