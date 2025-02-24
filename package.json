@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
-    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+    "build": "npm install && npm install --prefix client && npm run build --prefix client",
+    "render-postbuild": "npm install --prefix client --production=false && cd /opt/render/project/src/client && npm run build"
   },
   "keywords": [],
   "author": "",
